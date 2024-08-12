@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "users"
+version = "0.1.0"
+description = ""
+authors = ["GabrielTeodoroSan <gabrielteodorodomingues@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.112.0"
+uvicorn = "^0.30.5"
+
+
+[tool.poetry.group.dev.dependencies]
+taskipy = "^1.13.0"
+isort = "^5.13.2"
+blue = "^0.9.1"
+
+
+[tool.taskipy.tasks]
+run = 'uvicorn app:main.app --host 0.0.0.0 --reload'
+test = 'pytest --cov=app'
+clear = 'isort . && blue .'
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
