@@ -1,5 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
+from jwt import decode
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from sqlalchemy.pool import StaticPool
@@ -7,6 +8,8 @@ from sqlalchemy.pool import StaticPool
 from app.database import get_session
 from app.main import app
 from app.models import User, table_registry
+from security import get_password_hash
+from settings import Settings
 
 
 @pytest.fixture
@@ -34,3 +37,29 @@ def client(session):
         yield client
 
     app.dependency_overrides.clear()
+
+
+@pytest.fixture
+def user(session):
+    user = User(
+        username='Bobson',
+        email='bobson@gmail.com',
+        password=get_password_hash('bobsonfoda123'),
+    )
+
+    session.add(user)
+    session.commit()
+    session.refresh(user)
+
+    user.clean_password = 'bobsonfoda123'
+
+    return user
+
+
+@pytest.fixture
+def token(client, user):
+    response = client.post(
+        '/auth/token',
+        data={'username': user.email, 'password': user.clean_password},
+    )
+    return response.json()['access_token']
