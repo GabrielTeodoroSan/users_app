@@ -1,13 +1,27 @@
-from uuid import UUID
-
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, EmailStr
 
 
 class UserResponse(BaseModel):
-    id: UUID
+    id: int
     username: str
-    email: str
+    email: EmailStr
+    model_config = ConfigDict(from_attributes=True)
 
 
-class User(UserResponse):
+class User(BaseModel):
+    id: int
+    username: str
+    email: EmailStr
     password: str
+    model_config = ConfigDict(from_attributes=True)
+
+
+class UserCreate(BaseModel):
+    username: str
+    email: EmailStr
+    password: str
+    model_config = ConfigDict(from_attributes=True)
+
+
+class Message(BaseModel):
+    message: str

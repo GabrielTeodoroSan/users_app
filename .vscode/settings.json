@@ -1,7 +1,11 @@
 {
     "cSpell.ignoreWords": [
         "Boberson",
+        "Bobsom",
+        "bobson",
+        "bobsonorgulhonacional",
         "fastapi",
+        "poolclass",
         "pydantic",
         "sqlalchemy"
     ]
