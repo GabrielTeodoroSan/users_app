@@ -22,8 +22,8 @@ def login_for_access_token(
 
     if not user:
         raise HTTPException(
-            status_code=HTTPStatus.NOT_FOUND,
-            detail='Incorrect email or password',
+            HTTPStatus.NOT_FOUND,
+            'Incorrect email or password',
         )
 
     if not password_is_valid(form_data.password, user.password):

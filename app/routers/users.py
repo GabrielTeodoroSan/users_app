@@ -27,13 +27,13 @@ def create_user(user: UserCreate, session: Session = Depends(get_session)):
     if db_user:
         if user.username == db_user.username:
             raise HTTPException(
-                status_code=HTTPStatus.BAD_REQUEST,
-                detail='Username already exist !',
+                HTTPStatus.BAD_REQUEST,
+                'Username already exist !',
             )
         else:
             raise HTTPException(
-                status_code=HTTPStatus.BAD_REQUEST,
-                detail='Email already exist !',
+                HTTPStatus.BAD_REQUEST,
+                'Email already exist !',
             )
 
     new_user = models.User(
@@ -58,7 +58,7 @@ def update_user(
 ):
     if current_user.id != id:
         raise HTTPException(
-            status_code=HTTPStatus.FORBIDDEN, detail='Not enough permissions!'
+            HTTPStatus.FORBIDDEN, 'Not enough permissions!'
         )
 
     updated_user = session.scalar(
@@ -88,14 +88,14 @@ def delete_user(
 ):
     if current_user.id != id:
         raise HTTPException(
-            status_code=HTTPStatus.FORBIDDEN, detail='Not enough permissions!'
+            HTTPStatus.FORBIDDEN, 'Not enough permissions!'
         )
 
     db_user = session.scalar(select(models.User).where(models.User.id == id))
 
     if not db_user:
         raise HTTPException(
-            status_code=HTTPStatus.NOT_FOUND, detail='User not found'
+            HTTPStatus.NOT_FOUND, 'User not found'
         )
 
     return {'message': 'User deleted'}
@@ -107,7 +107,7 @@ def get_user(id: int, session: Session = Depends(get_session)):
 
     if not db_user:
         raise HTTPException(
-            status_code=HTTPStatus.NOT_FOUND, detail='User not found'
+            HTTPStatus.NOT_FOUND, 'User not found'
         )
 
     return db_user
