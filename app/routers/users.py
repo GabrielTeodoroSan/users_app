@@ -57,9 +57,7 @@ def update_user(
     current_user: User = Depends(get_current_user),
 ):
     if current_user.id != id:
-        raise HTTPException(
-            HTTPStatus.FORBIDDEN, 'Not enough permissions!'
-        )
+        raise HTTPException(HTTPStatus.FORBIDDEN, 'Not enough permissions!')
 
     updated_user = session.scalar(
         select(models.User).where(models.User.id == id)
@@ -87,16 +85,12 @@ def delete_user(
     current_user: User = Depends(get_current_user),
 ):
     if current_user.id != id:
-        raise HTTPException(
-            HTTPStatus.FORBIDDEN, 'Not enough permissions!'
-        )
+        raise HTTPException(HTTPStatus.FORBIDDEN, 'Not enough permissions!')
 
     db_user = session.scalar(select(models.User).where(models.User.id == id))
 
     if not db_user:
-        raise HTTPException(
-            HTTPStatus.NOT_FOUND, 'User not found'
-        )
+        raise HTTPException(HTTPStatus.NOT_FOUND, 'User not found')
 
     return {'message': 'User deleted'}
 
@@ -106,8 +100,6 @@ def get_user(id: int, session: Session = Depends(get_session)):
     db_user = session.scalar(select(models.User).where(models.User.id == id))
 
     if not db_user:
-        raise HTTPException(
-            HTTPStatus.NOT_FOUND, 'User not found'
-        )
+        raise HTTPException(HTTPStatus.NOT_FOUND, 'User not found')
 
     return db_user

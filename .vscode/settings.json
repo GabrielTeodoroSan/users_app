@@ -7,8 +7,10 @@
         "bobsonorgulhonacional",
         "fastapi",
         "poolclass",
+        "psycopg",
         "pwdlib",
         "pydantic",
-        "sqlalchemy"
+        "sqlalchemy",
+        "testcontainers"
     ]
 }
