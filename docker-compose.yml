@@ -1,0 +1,31 @@
+services: 
+
+  asteri_store:
+    image: asteri_store
+    entrypoint: ./entrypoint.sh
+    build: .
+    ports: 
+      - 8000:8000
+    depends_on:
+      - asteri_db
+    environment: 
+      DATABASE_URL: postgresql+psycopg://asteri:connect_asteri1234@asteri_db:5432/asteri_users_db
+
+  asteri_db: 
+    image: postgres
+    volumes: 
+      - pgdata:/var/lib/postgresql/data
+    environment: 
+      POSTGRES_USER: asteri
+      POSTGRES_DB: asteri_users_db
+      POSTGRES_PASSWORD: connect_asteri1234
+    ports:
+      - 5432:5432
+    healthcheck: 
+      test: ['CMD-SHELL', 'pg_isready -d asteri_users_db -U asteri']
+      interval: 5s 
+      timeout: 5s
+      retries: 10
+
+volumes: 
+  pgdata:
