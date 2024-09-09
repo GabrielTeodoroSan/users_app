@@ -1,7 +1,7 @@
 from datetime import datetime
 from uuid import UUID
 
-from sqlalchemy import func
+from sqlalchemy import func, Index
 from sqlalchemy.orm import Mapped, mapped_column, registry
 
 table_registry = registry()
@@ -20,3 +20,7 @@ class User:
     created_at: Mapped[datetime] = mapped_column(
         init=False, server_default=func.now()
     )
+    admin: Mapped[bool] = mapped_column(default=False) 
+
+
+email_index = Index('users_email_index', User.email)
