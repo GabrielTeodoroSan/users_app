@@ -59,7 +59,7 @@ def login_for_admin_access_token(
     if user.admin == False:
         raise HTTPException(
             status_code=HTTPStatus.UNAUTHORIZED,
-            detail='You cant access this content !'
+            detail='You cant access this content !',
         )
 
     access_token = create_access_token(data={'sub': user.email})

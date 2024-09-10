@@ -34,3 +34,19 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     username: str | None = None
+
+
+class AdminUserCreate(BaseModel):
+    id: int
+    username: str
+    email: str
+    password: str
+    admin: bool
+    model_config = ConfigDict(from_attributes=True)
+
+
+class AdminResponse(BaseModel):
+    id: str
+    username: str
+    email: str
+    admin: bool

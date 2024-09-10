@@ -29,7 +29,7 @@ testcontainers = "^4.8.1"
 
 
 [tool.taskipy.tasks]
-run = 'uvicorn app.main:app --host 0.0.0.0 --reload'
+run = 'docker stop some-postgres; docker container rm some-postgres; docker run --name some-postgres -e POSTGRES_PASSWORD=connect_asteri1234 -e POSTGRES_USER=asteri -e POSTGRES_DB=asteri_users_db -p 5432:5432 -d postgres; uvicorn app.main:app --host 0.0.0.0 --reload'
 test = 'export PYTHONPATH="$(pwd)/app:$PYTHONPATH"; pytest -cov=app'
 clear = 'isort . && blue .'
 
