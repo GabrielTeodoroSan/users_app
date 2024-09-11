@@ -62,6 +62,23 @@ def user(session):
 
     return user
 
+@pytest.fixture
+def admin(session):
+    user = User(
+        username=Settings().ADMIN_NAME,
+        email=Settings().ADMIN_EMAIL,
+        password=get_password_hash(Settings().ADMIN_PASSWORD),
+        admin=True
+    )
+
+    session.add(user)
+    session.commit()
+    session.refresh(user)
+
+    user.clean_password = 'admin'
+
+    return user
+
 
 @pytest.fixture
 def token(client, user):
