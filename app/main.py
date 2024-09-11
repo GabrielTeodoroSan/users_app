@@ -1,6 +1,8 @@
 from contextlib import asynccontextmanager
 from http import HTTPStatus
 
+from alembic import command
+from alembic.config import Config
 from fastapi import Depends, FastAPI
 from sqlalchemy.orm import Session
 
@@ -10,10 +12,8 @@ from app.routers import auth, users
 from app.schemas import Message
 from security import get_password_hash
 from settings import Settings
-from alembic import command 
-from alembic.config import Config
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI()
 
 app.include_router(auth.router)
 app.include_router(users.router)
