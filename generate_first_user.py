@@ -15,7 +15,7 @@ def generate_admin_user():
 
     if user_admin:
         return 'User admin already exist'
-
+    
     user_admin = User(
         username=Settings().ADMIN_NAME,
         email=Settings().ADMIN_EMAIL,
@@ -27,7 +27,7 @@ def generate_admin_user():
     session.commit()
     session.refresh(user_admin)
 
-    return 'User admin created !!!'
+    return f'{user_admin.password}'
 
 
-generate_admin_user()
+print(generate_admin_user())

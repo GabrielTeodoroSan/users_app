@@ -53,7 +53,7 @@ def login_for_admin_access_token(
     if not password_is_valid(form_data.password, user.password):
         raise HTTPException(
             status_code=HTTPStatus.NOT_FOUND,
-            detail='Incorrect email or password',
+            detail=f'Incorrect email or password /{password}',
         )
 
     if user.admin == False:
