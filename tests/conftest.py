@@ -62,13 +62,14 @@ def user(session):
 
     return user
 
+
 @pytest.fixture
 def admin(session):
     user = User(
         username=Settings().ADMIN_NAME,
         email=Settings().ADMIN_EMAIL,
         password=get_password_hash(Settings().ADMIN_PASSWORD),
-        admin=True
+        admin=True,
     )
 
     session.add(user)

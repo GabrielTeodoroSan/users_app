@@ -20,7 +20,6 @@ class User:
     created_at: Mapped[datetime] = mapped_column(
         init=False, server_default=func.now()
     )
-    admin: Mapped[bool] = mapped_column(default=False)
 
 
 email_index = Index('users_email_index', User.email)
